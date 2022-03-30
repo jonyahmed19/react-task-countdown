@@ -1,0 +1,13 @@
+body {
+  background: linear-gradient(90deg, #00c9ff 0%, #92fe9d 100%);
+}
+.todo-container {
+  max-width: 520px;
+  margin: 0 auto;
+  margin-top: 80px;
+  background-color: #fff;
+  padding: 10px 30px;
+}
+form {
+  display: flex;
+}
