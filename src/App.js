@@ -1,51 +1,37 @@
-import { Box, Grid, TextField, Button, Stack } from "@mui/material";
-import PlayCircleOutlineRoundedIcon from "@mui/icons-material/PlayCircleOutlineRounded";
 import "./App.css";
+import { useEffect, useState } from "react";
+import AddTodo from "./components/AddTodo";
+import Item from "./components/Item";
+import { Box } from "@mui/material";
+import { collection, onSnapshot, getFirestore } from "firebase/firestore";
+import { app } from "./firebase/firebase.utils";
+const db = getFirestore(app);
 
 function App() {
+  const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    const colRef = collection(db, "tasks");
+    const mount = true;
+    onSnapshot(colRef, (data) => {
+      if (mount) {
+        let task = [];
+        data.docs.forEach((item) => {
+          task.push({ id: item.id, ...item.data() });
+        });
+        setTasks(task);
+      }
+    });
+  }, []);
+
   return (
     <div className="App">
       <Box sx={{ display: "flexbox" }} className="todo-container">
-        <div className="add-todo-area">
-          <form>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                flexDirection: "row",
-                gap: "50px",
-                alignItems: "center",
-                flex: 1,
-              }}
-            >
-              <Box
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  flex: 1,
-                  gap: "10px",
-                }}
-              >
-                <TextField id="title" label="Task Name" variant="standard" />
-                <TextField
-                  id="description"
-                  label="Task Description"
-                  variant="standard"
-                />
-              </Box>
-              <div>
-                <Button variant="contained" color="primary">
-                  <PlayCircleOutlineRoundedIcon />
-                </Button>
-              </div>
-            </Box>
-          </form>
-        </div>
+        <AddTodo />
+        {tasks.map((task, index) => (
+          <Item key={index} task={task} />
+        ))}
       </Box>
-
-      {/* <Button variant="contained" color="primary">
-        Hello
-      </Button> */}
     </div>
   );
 }
