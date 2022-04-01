@@ -2,8 +2,16 @@ import { Box } from "@mui/material";
 import React from "react";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import PlayCircleOutlineRoundedIcon from "@mui/icons-material/PlayCircleOutlineRounded";
+import StopCircleIcon from "@mui/icons-material/StopCircle";
+import PauseCircleOutlineIcon from "@mui/icons-material/PauseCircleOutline";
 const Item = ({ task }) => {
-  console.log(task);
+  const deleteTask = (id) => {
+    if (window.confirm("Are you sure to delete?")) {
+      console.log("deleted");
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -24,7 +32,10 @@ const Item = ({ task }) => {
           flex: 1,
         }}
       >
-        <h2 style={{ fontSize: "20px", fontWeight: "500" }}>{task.name}</h2>
+        <h2 style={{ fontSize: "20px", fontWeight: "500" }}>
+          {task.name}
+          <span className="time">2 Sec</span>
+        </h2>
         <p
           style={{
             margin: "0",
@@ -41,12 +52,26 @@ const Item = ({ task }) => {
         </p>
       </Box>
 
-      <Box>
+      <Box
+        style={{
+          display: "flex",
+          gap: "10px",
+        }}
+      >
+        <PlayCircleOutlineRoundedIcon
+          color="primary"
+          sx={{ fontSize: 30, cursor: "pointer" }}
+        />
+        <StopCircleIcon
+          color="primary"
+          sx={{ fontSize: 30, cursor: "pointer" }}
+        />
         <CheckCircleOutlineIcon
           color="primary"
           sx={{ fontSize: 30, cursor: "pointer" }}
         />
         <DeleteOutlineIcon
+          onClick={() => deleteTask(task.id)}
           color="primary"
           sx={{ fontSize: 30, cursor: "pointer" }}
         />

@@ -13,3 +13,9 @@ body {
 form {
   display: flex;
 }
+.time {
+  font-size: 17px;
+  margin-left: 50px;
+  color: #1976d2;
+  font-weight: normal;
+}
