@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, TextField } from "@mui/material";
 import PlayCircleOutlineRoundedIcon from "@mui/icons-material/PlayCircleOutlineRounded";
 import { collection, addDoc } from "firebase/firestore/lite";
 import db from "../firebase/firebase.utils";
+import { serverTimestamp } from "firebase/firestore";
 
 const AddTodo = () => {
   const addTask = (e) => {
@@ -23,7 +24,14 @@ const AddTodo = () => {
 
     description.value = "";
     name.value = "";
+
+    let a = new Date();
   };
+
+  useEffect(() => {
+    let a = new Date();
+    console.log(a.getTime() - 1648861703024);
+  }, []);
 
   return (
     <div className="add-todo-area">

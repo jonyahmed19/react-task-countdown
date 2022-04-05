@@ -5,10 +5,16 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import PlayCircleOutlineRoundedIcon from "@mui/icons-material/PlayCircleOutlineRounded";
 import StopCircleIcon from "@mui/icons-material/StopCircle";
 import PauseCircleOutlineIcon from "@mui/icons-material/PauseCircleOutline";
+import { collection, doc, deleteDoc, getFirestore } from "firebase/firestore";
+import { app } from "../firebase/firebase.utils";
+
 const Item = ({ task }) => {
-  const deleteTask = (id) => {
+  const deleteTask = async (task) => {
     if (window.confirm("Are you sure to delete?")) {
-      console.log("deleted");
+      const db = getFirestore(app);
+      const colRef = collection(db, "tasks");
+
+      await deleteDoc(doc(colRef, task));
     }
   };
 
